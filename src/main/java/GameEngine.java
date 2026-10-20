@@ -8,41 +8,42 @@ public class GameEngine {
     private boolean gameWon;
     private boolean userQuit;
     private boolean gameOver;
+    private boolean hintsEnabled;
 
     public GameEngine(int min, int max) {
         this.min = min;
         this.max = max;
-        this.attempts = 0;
-        this.gameWon = false;
-        this.userQuit = false;
-        this.gameOver = false;
+        this.hintsEnabled = true;
         reset();
     }
 
-public GuessResult makeGuess(int guess) {
-    // Check if user wants to quit
-    if (guess < 0) {
-        userQuit = true;
-        return new GuessResult(false, "Exiting game...", attempts);
-    }
+    public GuessResult makeGuess(int guess) {
+        // Check if user wants to quit
+        if (guess < 0) {
+            userQuit = true;
+            return new GuessResult(false, "Exiting game...", attempts);
+        }
 
-    attempts++;
+        attempts++;
 
-    if (guess == target) {
-        gameWon = true;
-        return new GuessResult(true,
-                "Correct! You guessed it in " + attempts + " attempts.",
-                attempts);
+        // Check for correct guess
+        if (guess == target) {
+            gameWon = true;
+            return new GuessResult(true,
+                    "Correct! You guessed it in " + attempts + " attempts.",
+                    attempts);
+        }
 
-    } else if (attempts >= MAX_ATTEMPTS) {
-        gameOver = true;
-        return new GuessResult(false,
-                "Game Over! You've used all " + MAX_ATTEMPTS +
-                " attempts. The number was " + target + ".",
-                attempts);
+        // Check maximum attempts
+        if (attempts >= MAX_ATTEMPTS) {
+            gameOver = true;
+            return new GuessResult(false,
+                    "Game Over! You've used all " + MAX_ATTEMPTS +
+                    " attempts. The number was " + target + ".",
+                    attempts);
+        }
 
-    } else {
-        int remaining = MAX_ATTEMPTS - attempts;
+        // Generate feedback
         GuessResult result;
 
         if (guess < target) {
@@ -53,10 +54,12 @@ public GuessResult makeGuess(int guess) {
                     "Too high! Try a lower number.", attempts);
         }
 
-        result.setRemainingAttempts(remaining);
+        // Combine maximum attempts and hint functionality
+        result.setRemainingAttempts(MAX_ATTEMPTS - attempts);
+        result.setHint(getHint(guess));
+
         return result;
     }
-}
 
     public void reset() {
         target = Utils.randomInt(min, max);
@@ -92,6 +95,30 @@ public GuessResult makeGuess(int guess) {
 
     public int getMax() {
         return max;
+    }
+
+    public boolean isHintsEnabled() {
+        return hintsEnabled;
+    }
+
+    public void setHintsEnabled(boolean enabled) {
+        this.hintsEnabled = enabled;
+    }
+
+    private String getHint(int guess) {
+        if (!hintsEnabled) {
+            return "";
+        }
+
+        int diff = Math.abs(target - guess);
+
+        if (attempts >= 3 && diff <= 10) {
+            return " HINT: You're very close!";
+        } else if (attempts >= 5 && diff <= 20) {
+            return " HINT: Getting warmer!";
+        }
+
+        return "";
     }
 
     // For testing purposes only
