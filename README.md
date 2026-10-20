@@ -36,11 +36,11 @@ possible value is included in the range.
 Contains documentation describing the project,
 branch structure, and Git workflows.
 
-\## Git Workflow Learning Summary
+## Git Workflow Learning Summary
 
 
 
-\### Merge
+### Merge
 
 
 
@@ -64,7 +64,7 @@ because it keeps track of the changes made on each branch.
 
 
 
-\### Rebase
+### Rebase
 
 
 
@@ -88,7 +88,7 @@ to update it without adding extra merge commits.
 
 
 
-\### Squash
+### Squash
 
 
 
@@ -110,7 +110,7 @@ are all part of the same feature.
 
 
 
-\### Cherry-Pick
+### Cherry-Pick
 
 
 
@@ -134,11 +134,11 @@ without bringing over other changes.
 
 
 
-\## Differences Between the Feature Branches
+## Differences Between the Feature Branches
 
 
 
-\### Feature1
+### Feature1
 
 
 
@@ -156,7 +156,7 @@ and deleted the feature1 branch.
 
 
 
-\### Feature2
+### Feature2
 
 
 
@@ -182,7 +182,7 @@ working with the maximum attempts feature.
 
 
 
-\### Feature3
+### Feature3
 
 
 
@@ -204,7 +204,7 @@ described the entire hint feature.
 
 
 
-\## What I Learned
+## What I Learned
 
 
 
