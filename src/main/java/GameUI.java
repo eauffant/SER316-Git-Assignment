@@ -9,13 +9,20 @@ public class GameUI {
         this.scanner = scanner;
     }
 
-    public void start() {
-        while (!engine.isGameWon()) {
-            System.out.print("Guess a number between " + engine.getMin() + " and " + engine.getMax() + ": ");
-            int guess = Utils.readInt(scanner);
+	public void start() {
+    		while (!engine.isGameWon() &&
+           	!engine.hasUserQuit() &&
+           	!engine.isGameOver()) {
 
-            GuessResult result = engine.makeGuess(guess);
-            System.out.println(result.getMessage());
-        }
-    }
+        	System.out.print("Guess a number between " +
+                	engine.getMin() + " and " +
+                	engine.getMax() +
+                	" (or negative to exit): ");
+
+        	int guess = Utils.readInt(scanner);
+
+        	GuessResult result = engine.makeGuess(guess);
+        	System.out.println(result.getMessage());
+    		}
+	}
 }
